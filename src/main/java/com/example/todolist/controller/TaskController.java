@@ -3,8 +3,8 @@ package com.example.todolist.controller;
 import com.example.todolist.Dto.TaskDto;
 import com.example.todolist.entities.Task;
 import com.example.todolist.repositories.TaskRepository;
+import com.example.todolist.services.TaskUpdateService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -15,9 +15,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/tasks")
 class TaskController {
     private final TaskRepository taskRepository;
+    private final TaskUpdateService taskUpdateService;
 
-    public TaskController(TaskRepository taskRepository1) {
+    public TaskController(TaskRepository taskRepository1, TaskUpdateService taskUpdateService) {
         this.taskRepository = taskRepository1;
+        this.taskUpdateService = taskUpdateService;
     }
     @GetMapping
     public List<TaskDto> getTasks() {
@@ -44,6 +46,14 @@ class TaskController {
                 return "ok";
 
     }
+    @PutMapping("/update/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public String updateTask(@PathVariable Long id, @RequestBody TaskDto taskDto ){
+        taskUpdateService.updateTask(id, taskDto.getTitle(), taskDto.getContent());
+
+        return "Task updated";
+    }
+
 
 
 }
