@@ -3,6 +3,7 @@ package com.example.todolist.controller;
 import com.example.todolist.Dto.TaskDto;
 import com.example.todolist.entities.Task;
 import com.example.todolist.repositories.TaskRepository;
+import com.example.todolist.services.TaskCreateService;
 import com.example.todolist.services.TaskUpdateService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,14 +14,18 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/tasks")
+
 class TaskController {
     private final TaskRepository taskRepository;
     private final TaskUpdateService taskUpdateService;
+    private final TaskCreateService taskCreateService;
 
-    public TaskController(TaskRepository taskRepository1, TaskUpdateService taskUpdateService) {
+    TaskController(TaskRepository taskRepository1, TaskUpdateService taskUpdateService, TaskCreateService taskCreateService) {
         this.taskRepository = taskRepository1;
         this.taskUpdateService = taskUpdateService;
+        this.taskCreateService = taskCreateService;
     }
+    @CrossOrigin(origins = "*")
     @GetMapping
     public List<TaskDto> getTasks() {
         List<Task> tasks = taskRepository.findAll();
@@ -32,20 +37,16 @@ class TaskController {
                         task.getCreatedAt()))
                 .collect(Collectors.toList());
     }
+
+    @CrossOrigin(origins = "*")
     @PostMapping("/create-task")
     @ResponseStatus(HttpStatus.CREATED)
     public String createTask(@RequestBody TaskDto taskDto ){
-        Task task = new Task(
-                taskDto.getTitle(),
-                taskDto.getContent(),
-                LocalDateTime.now(),
-                LocalDateTime.now()
-
-        );
-        Task savedTask = taskRepository.save(task);
-                return "ok";
+        taskCreateService.createTask(taskDto);
+        return "Task has been created";
 
     }
+    @CrossOrigin(origins = "*")
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
     public String updateTask(@PathVariable Long id, @RequestBody TaskDto taskDto ){
@@ -53,7 +54,11 @@ class TaskController {
 
         return "Task updated";
     }
-
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/delete/{id}")
+    public void deleteTask(@PathVariable Long id) {
+        taskRepository.deleteById(id);
+    }
 
 
 }
