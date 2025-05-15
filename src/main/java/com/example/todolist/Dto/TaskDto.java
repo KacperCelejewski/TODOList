@@ -2,26 +2,31 @@ package com.example.todolist.Dto;
 
 import java.time.LocalDateTime;
 
+/**
+ * Data Transfer Object (DTO) representing a task.
+ * This class is used to encapsulate task-related data and transfer it between different layers of the application.
+ */
+
 public class TaskDto {
-    private Long id;
+    private final Long id;
+    private boolean completed;
     private String title;
     private String content;
-    private LocalDateTime createdAt;
 
-    public TaskDto(Long id, String title, String content, LocalDateTime createdAt) {
+
+    public TaskDto(Long id, String title,boolean completed, String content) {
         this.id = id;
         this.title = title;
+        this.completed = completed;
         this.content = content;
-        this.createdAt = createdAt;
+
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+
 
     public String getTitle() {
         return title;
@@ -31,19 +36,17 @@ public class TaskDto {
         this.title = title;
     }
 
+    public void setCompleted(boolean completed){
+        this.completed = completed;
+    }
+    public boolean getCompleted(){
+        return completed;
+    }
+
     public String getContent() {
         return content;
     }
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-}
+    }}

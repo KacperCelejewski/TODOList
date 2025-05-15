@@ -17,6 +17,12 @@ public class TaskCreateService {
     public TaskCreateService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
+    /**
+     * Creates a new task with the provided details. The task is saved to the repository.
+     *
+     * @param taskDto the data transfer object containing task details
+     */
+    
 
 
 
@@ -24,11 +30,15 @@ public class TaskCreateService {
     public void createTask(TaskDto taskDto) {
         Task task = new Task(
                 taskDto.getTitle(),
+                taskDto.getCompleted(),
                 taskDto.getContent(),
                 LocalDateTime.now(),
                 LocalDateTime.now()
 
         );
-        Task savedTask = taskRepository.save(task);
+
+    Task savedTask = taskRepository.save(task);
+    
+
     }
 }
