@@ -86,7 +86,7 @@ src/
      │         └── TodoApplication.java
      └── resources/
           ├── application.properties
-          └── static/ (optional for frontend)
+
 ```
 
 ---
