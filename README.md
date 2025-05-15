@@ -2,7 +2,7 @@
 
 A simple To-Do List web application built with **Java**, **Spring Boot**, **Maven**, and **Hibernate**.  
 It provides a REST API with basic **CRUD** operations for managing tasks.
-👉 Frontend repo: [https://github.com/KacperCelejewski/TODO-front](https://github.com/KacperCelejewski/TODOList-front)
+👉 Frontend repo: [https://github.com/KacperCelejewski/TODOList-front](https://github.com/KacperCelejewski/TODOList-front)
 
 ---
 
